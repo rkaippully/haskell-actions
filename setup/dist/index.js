@@ -11193,15 +11193,14 @@ function failed(tool, version) {
     throw new Error(`All install methods for ${tool} ${version} failed`);
 }
 async function configureOutputs(tool, path, os) {
+    var _a;
     core.setOutput(`${tool}-path`, path);
     core.setOutput(`${tool}-exe`, await io_1.which(tool));
     if (tool == 'stack') {
         if (os === 'win32') {
-            core.exportVariable('STACK_ROOT', 'C:\\sr');
-            core.setOutput('stack-root', 'C:\\sr');
-        }
-        else {
-            core.setOutput('stack-root', `${process_1.default.env.HOME}/.stack`);
+            const sr = (_a = process_1.default.env['STACK_ROOT']) !== null && _a !== void 0 ? _a : 'C:\\sr';
+            core.exportVariable('STACK_ROOT', sr);
+            core.setOutput('stack-root', sr);
         }
     }
 }
